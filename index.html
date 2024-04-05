@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop with Bag</title>
+    <style>
+        #shop {
+            display: inline-block;
+            width: 90%;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .item {
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .bag {
+            display: inline-block;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .bag-item {
+            margin-bottom: 5px;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        .clean, .total-price {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="shop">
+    <h2>Shop</h2>
+</div>
+<div class="bag">
+    <h2>Bag</h2>
+    <div class="total-price">Gesamtwert:</div>
+    <div class="clean pointer">Alles löschen [x]</div>
+</div>
+
+<script>
+    const shopItems = [
+        {name: "torch", price: 50, displayname: "Fackel "},
+        {name: "futter", price: 50, displayname: "Ration / Ration / Ration"},
+        {name: "rope", price: 100, displayname: "Seil 60'"},
+        {name: "arrows", price: 100, displayname: "Pfeile (20)"},
+        {name: "backpack", price: 200, displayname: "Rucksack"},
+        {name: "caltrops", price: 50, displayname: "Caltrops (ein Sack)"},
+        {name: "crossbowbolts", price: 100, displayname: "Armbrustbolzen (20)"},
+        {name: "crowbar", price: 50, displayname: "Crowbar"},
+        {name: "flask-bottle", price: 30, displayname: "Flasche"},
+        {name: "grapplinghook", price: 100, displayname: "Grappling Hook"},
+        {name: "flint-n-steel", price: 50, displayname: "Flint & Steel"},
+        {name: "ironspikes", price: 100, displayname: "Iron spikes (10)"},
+        {name: "lantern", price: 500, displayname: "Laterne"},
+        {name: "mirror", price: 1000, displayname: "Spiegel"},
+        {name: "oilflask", price: 50, displayname: "Ölfläschchen"},
+        {name: "pole", price: 50},
+        {name: "rations-3", price: 50}
+    ]
+
+    const shopDiv = document.getElementById("shop");
+
+    shopItems.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('item');
+        itemDiv.dataset.name = item.name;
+        itemDiv.dataset.price = item.price;
+        itemDiv.textContent = `${item.displayname ? item.displayname : item.name} - ${item.price} copper`;
+        itemDiv.addEventListener('click', () => addItemToBag(itemDiv));
+        shopDiv.appendChild(itemDiv);
+    });
+
+    const bag = document.querySelector('.bag');
+
+    const cleaner = document.querySelector('.clean')
+    cleaner.addEventListener('click', () => {
+        bag.querySelectorAll('.bag-item').forEach(item => item.remove())
+        updateBagPrice();
+    })
+
+    function addItemToBag(item) {
+        const newItem = item.cloneNode(true);
+        newItem.id = Math.floor(Math.random()*Math.pow(10,17)); // Generate unique ID
+        newItem.classList.remove('item');
+        newItem.classList.add('bag-item');
+        newItem.addEventListener('click', () => removeItemFromBag(newItem));
+        bag.appendChild(newItem);
+        updateBagPrice();
+    }
+
+    function removeItemFromBag(item) {
+        item.remove();
+        updateBagPrice();
+    }
+
+    function convertPrice(priceInCopper) {
+        const gold = Math.floor(priceInCopper / 100);
+        const silver = Math.floor((priceInCopper % 100) / 10);
+        const copper = priceInCopper % 10;
+        return {gold, silver, copper};
+    }
+
+    function updateBagPrice() {
+        const bagItems = bag.querySelectorAll('.bag-item');
+        let totalPrice = 0;
+        bagItems.forEach(item => {
+            totalPrice += parseInt(item.dataset.price);
+        });
+        const totalPriceElement = bag.querySelector('.total-price');
+        const priceInCopper = totalPrice;
+        const {gold, silver, copper} = convertPrice(priceInCopper);
+        const txt = `${gold}g ${silver}s ${copper}c`
+        if (totalPriceElement) {
+            totalPriceElement.textContent = `Gesamtwert: ${txt}`;
+        } else {
+            const totalPriceDiv = document.createElement('div');
+            totalPriceDiv.classList.add('total-price');
+            totalPriceDiv.textContent = `Gesamtwert: ${totalPrice} copper`;
+            bag.appendChild(totalPriceDiv);
+        }
+    }
+</script>
+</body>
+</html>
+
