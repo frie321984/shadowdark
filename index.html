@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop with Bag</title>
+    <title>Gemischtwarenladen</title>
     <style>
         #shop {
             display: inline-block;
@@ -40,10 +40,10 @@
 </head>
 <body>
 <div id="shop">
-    <h2>Shop</h2>
+    <h2>Gemischtwarenladen</h2>
 </div>
 <div class="bag">
-    <h2>Bag</h2>
+    <h2>Einkaufstasche</h2>
     <div class="total-price">Gesamtwert:</div>
     <div class="clean pointer">Alles löschen [x]</div>
 </div>
@@ -76,7 +76,9 @@
         itemDiv.classList.add('item');
         itemDiv.dataset.name = item.name;
         itemDiv.dataset.price = item.price;
-        itemDiv.textContent = `${item.displayname ? item.displayname : item.name} - ${item.price} copper`;
+        const preis= priceToString(convertPrice(item.price))
+
+        itemDiv.textContent = `${item.displayname ? item.displayname : item.name} - ${preis}`;
         itemDiv.addEventListener('click', () => addItemToBag(itemDiv));
         shopDiv.appendChild(itemDiv);
     });
@@ -110,6 +112,14 @@
         const copper = priceInCopper % 10;
         return {gold, silver, copper};
     }
+    function priceToString(convertedPrice, showAll=false) {
+        //if (showAll) return `${convertedPrice.gold}g ${convertedPrice.silver}s ${convertedPrice.copper}c`
+        const totxt = (value, type) =>
+            (value != 0 || showAll)
+             ? `${value}${type}`
+             :''
+        return [totxt(convertedPrice.gold, 'g'), totxt(convertedPrice.silver, 's'), totxt(convertedPrice.copper, 'c')].join(' ')
+    }
 
     function updateBagPrice() {
         const bagItems = bag.querySelectorAll('.bag-item');
@@ -118,9 +128,7 @@
             totalPrice += parseInt(item.dataset.price);
         });
         const totalPriceElement = bag.querySelector('.total-price');
-        const priceInCopper = totalPrice;
-        const {gold, silver, copper} = convertPrice(priceInCopper);
-        const txt = `${gold}g ${silver}s ${copper}c`
+        const txt = priceToString(convertPrice(totalPrice), true)
         if (totalPriceElement) {
             totalPriceElement.textContent = `Gesamtwert: ${txt}`;
         } else {
