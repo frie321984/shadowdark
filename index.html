@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="cache-control" content="max-age=86400, must-revalidate"><!-- cache for a day -->
     <title>Gemischtwarenladen</title>
     <style>
         #shop {
@@ -51,17 +52,17 @@
 <script>
     const shopItems = [
         {name: "torch", price: 50, displayname: "Fackel"},
-        {name: "futter", price: 50, displayname: "Ration / Ration / Ration"},
+        {name: "futter", price: 50, displayname: "Ration / Ration / Ration", maxItemsPerSlot: 3},
         {name: "rope", price: 100, displayname: "Seil 60'"},
-        {name: "arrows", price: 100, displayname: "Pfeile (20)"},
+        {name: "arrows", price: 100, displayname: "Pfeile (20)", maxItemsPerSlot: 20},
         {name: "backpack", price: 200, displayname: "Rucksack"},
         {name: "caltrops", price: 50, displayname: "Krähenfuß / Wurfeisen (ein Sack)"},
-        {name: "crossbowbolts", price: 100, displayname: "Armbrustbolzen (20)"},
+        {name: "crossbowbolts", price: 100, displayname: "Armbrustbolzen (20)", maxItemsPerSlot: 20},
         {name: "crowbar", price: 50, displayname: "Brecheisen"},
         {name: "flask-bottle", price: 30, displayname: "Flasche"},
         {name: "grapplinghook", price: 100, displayname: "Enterhaken"},
         {name: "flint-n-steel", price: 50, displayname: "Feuerstein & Stahl"},
-        {name: "ironspikes", price: 100, displayname: "Eisenstacheln (10)"},
+        {name: "ironspikes", price: 100, displayname: "Eisenstacheln (10)", maxItemsPerSlot: 10},
         {name: "lantern", price: 500, displayname: "Laterne"},
         {name: "mirror", price: 1000, displayname: "Spiegel"},
         {name: "oilflask", price: 50, displayname: "Ölfläschchen"},
