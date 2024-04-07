@@ -111,6 +111,10 @@ body {
     })
 
     function addItemToBag(item) {
+        if (bag.querySelectorAll('.bag-item').length >= 20) {
+           console.warn('too many items in bag. max 20')
+           return
+        }
         const newItem = item.cloneNode(true);
         newItem.id = Math.floor(Math.random()*Math.pow(10,17)); // Generate unique ID
         newItem.classList.remove('item');
