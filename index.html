@@ -52,9 +52,14 @@ body {
         flex-basis: calc(50% - 20px); /* Subtracting margin */
     }
 }
+h1, h2 { margin: 0; margin-bottom: 5px; padding: 0;}
+h1 { font-size: 1.5rem; padding: 0 10px; }
+h2 { font-size: 1.2rem; }
     </style>
 </head>
-<body class="container">
+<body>
+    <h1>Das Silberne Emporium</h1>
+<main class="container">
 <div id="shop" class="box">
     <h2>Gemischtwarenladen</h2>
 </div>
@@ -63,23 +68,23 @@ body {
     <div class="total-price">Gesamtwert:</div>
     <div class="clean pointer">Alles löschen [x]</div>
 </div>
-
+</main>
 <script>
     const shopItems = [
-        {name: "torch", price: 50, displayname: "Fackel", needsSlots: 1},
-        {name: "futter", price: 50, displayname: "Ration / Ration / Ration", maxItemsPerSlot: 3},
-        {name: "rope", price: 100, displayname: "Seil 60'"},
-        {name: "arrows", price: 100, displayname: "Pfeile (20)", maxItemsPerSlot: 20},
-        {name: "backpack", price: 200, displayname: "Rucksack"},
+        {name: "torch", price: 50, displayname: "🕯️ Fackel", needsSlots: 1},
+        {name: "futter", price: 50, displayname: "🥘 Ration / Ration / Ration", maxItemsPerSlot: 3},
+        {name: "rope", price: 100, displayname: "🪢 Seil 60'"},
+        {name: "arrows", price: 100, displayname: "🏹 Pfeile (20)", maxItemsPerSlot: 20},
+        {name: "backpack", price: 200, displayname: "🎒 Rucksack"},
         {name: "caltrops", price: 50, displayname: "Krähenfuß / Wurfeisen (ein Sack)"},
         {name: "crossbowbolts", price: 100, displayname: "Armbrustbolzen (20)", maxItemsPerSlot: 20},
         {name: "crowbar", price: 50, displayname: "Brecheisen"},
-        {name: "flask-bottle", price: 30, displayname: "Flasche"},
-        {name: "grapplinghook", price: 100, displayname: "Enterhaken"},
-        {name: "flint-n-steel", price: 50, displayname: "Feuerstein & Stahl"},
+        {name: "flask-bottle", price: 30, displayname: "🍼 Flasche"},
+        {name: "grapplinghook", price: 100, displayname: "🪝 Enterhaken"},
+        {name: "flint-n-steel", price: 50, displayname: "🔥 Feuerstein & Stahl"},
         {name: "ironspikes", price: 100, displayname: "Eisenstacheln (10)", maxItemsPerSlot: 10},
         {name: "lantern", price: 500, displayname: "Laterne"},
-        {name: "mirror", price: 1000, displayname: "Spiegel"},
+        {name: "mirror", price: 1000, displayname: "🪞 Spiegel"},
         {name: "oilflask", price: 50, displayname: "Ölfläschchen"},
         {name: "pole", price: 50, displayname: "Stange"},
 //        {name: "test", price: 0, displayname: "Test", needsSlots: 5},
@@ -111,6 +116,10 @@ body {
     })
 
     function addItemToBag(item) {
+        if (bag.querySelectorAll('.bag-item').length >= 20) {
+           console.warn('too many items in bag. max 20')
+           return
+        }
         const newItem = item.cloneNode(true);
         newItem.id = Math.floor(Math.random()*Math.pow(10,17)); // Generate unique ID
         newItem.classList.remove('item');
