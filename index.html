@@ -6,12 +6,8 @@
 		<meta http-equiv="cache-control" content="max-age=86400, must-revalidate"><!-- cache for a day -->
     <title>Gemischtwarenladen</title>
     <style>
-        #shop {
-            display: inline-block;
-            width: 90%;
-            border: 1px solid black;
-            padding: 10px;
-            margin: 10px;
+        body {
+            font-family: 'Comic Sans MS', cursive, serif;
         }
 
         .item {
@@ -19,17 +15,9 @@
             cursor: pointer;
         }
 
-        .bag {
-            display: inline-block;
-            border: 1px solid black;
+        #shop, #bag, .bag {
             padding: 10px;
-            margin: 10px;
         }
-
-        .bag-item {
-            margin-bottom: 5px;
-        }
-
         .pointer {
             cursor: pointer;
         }
@@ -37,13 +25,40 @@
         .clean, .total-price {
             margin: 5px 0;
         }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+body {
+  background: black;
+  color: white;
+}
+.box {
+    flex: 1;
+    background-color: #eee;
+    margin: 10px;
+    background-color: black;
+    margin: 0;padding: 0;
+}
+.bag-item, .item {
+  background-color: #eee;
+  color: black;
+  padding: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        flex-basis: calc(50% - 20px); /* Subtracting margin */
+    }
+}
     </style>
 </head>
-<body>
-<div id="shop">
+<body class="container">
+<div id="shop" class="box">
     <h2>Gemischtwarenladen</h2>
 </div>
-<div class="bag">
+<div id="bag" class="box">
     <h2>Einkaufstasche</h2>
     <div class="total-price">Gesamtwert:</div>
     <div class="clean pointer">Alles löschen [x]</div>
@@ -83,7 +98,7 @@
         shopDiv.appendChild(itemDiv);
     });
 
-    const bag = document.querySelector('.bag');
+    const bag = document.getElementById('bag');
 
     const cleaner = document.querySelector('.clean')
     cleaner.addEventListener('click', () => {
@@ -96,6 +111,7 @@
         newItem.id = Math.floor(Math.random()*Math.pow(10,17)); // Generate unique ID
         newItem.classList.remove('item');
         newItem.classList.add('bag-item');
+        newItem.classList.add('pointer');
         newItem.addEventListener('click', () => removeItemFromBag(newItem));
         bag.appendChild(newItem);
         updateBagPrice();
