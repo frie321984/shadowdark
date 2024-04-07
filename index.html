@@ -66,7 +66,7 @@ body {
 
 <script>
     const shopItems = [
-        {name: "torch", price: 50, displayname: "Fackel"},
+        {name: "torch", price: 50, displayname: "Fackel", needsSlots: 1},
         {name: "futter", price: 50, displayname: "Ration / Ration / Ration", maxItemsPerSlot: 3},
         {name: "rope", price: 100, displayname: "Seil 60'"},
         {name: "arrows", price: 100, displayname: "Pfeile (20)", maxItemsPerSlot: 20},
@@ -81,19 +81,23 @@ body {
         {name: "lantern", price: 500, displayname: "Laterne"},
         {name: "mirror", price: 1000, displayname: "Spiegel"},
         {name: "oilflask", price: 50, displayname: "Ölfläschchen"},
-        {name: "pole", price: 50, displayname: "Stange"}
+        {name: "pole", price: 50, displayname: "Stange"},
+//        {name: "test", price: 0, displayname: "Test", needsSlots: 5},
     ]
 
     const shopDiv = document.getElementById("shop");
 
-    shopItems.forEach((item, index) => {
+    shopItems
+     .map(item => ({...item, needsSlots: item.needsSlots||1}))
+     .forEach((item, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.classList.add('item');
         itemDiv.dataset.name = item.name;
         itemDiv.dataset.price = item.price;
+        itemDiv.dataset.needsSlots = item.needsSlots;
         const preis= priceToString(convertPrice(item.price))
 
-        itemDiv.textContent = `${item.displayname ? item.displayname : item.name} - ${preis}`;
+        itemDiv.textContent = `${item.displayname ? item.displayname : item.name} - ${preis} - ${item.needsSlots}`;
         itemDiv.addEventListener('click', () => addItemToBag(itemDiv));
         shopDiv.appendChild(itemDiv);
     });
@@ -139,17 +143,20 @@ body {
     function updateBagPrice() {
         const bagItems = bag.querySelectorAll('.bag-item');
         let totalPrice = 0;
+        let slotNum = 0
         bagItems.forEach(item => {
+console.log(slotNum, item)
             totalPrice += parseInt(item.dataset.price);
+            slotNum += parseInt(item.dataset.needsSlots);
         });
         const totalPriceElement = bag.querySelector('.total-price');
-        const txt = priceToString(convertPrice(totalPrice), true)
+        const txt = 'Gesamtwert: ' + priceToString(convertPrice(totalPrice), true) + `, Slots: ${slotNum}`
         if (totalPriceElement) {
-            totalPriceElement.textContent = `Gesamtwert: ${txt}`;
+            totalPriceElement.textContent = txt
         } else {
             const totalPriceDiv = document.createElement('div');
             totalPriceDiv.classList.add('total-price');
-            totalPriceDiv.textContent = `Gesamtwert: ${totalPrice} copper`;
+            totalPriceDiv.textContent = txt
             bag.appendChild(totalPriceDiv);
         }
     }
