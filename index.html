@@ -154,6 +154,7 @@ h2 { font-size: 1.2rem; }
         let totalPrice = 0;
         let slotNum = 0
         bagItems.forEach(item => {
+console.log(slotNum, item)
             totalPrice += parseInt(item.dataset.price);
             slotNum += parseInt(item.dataset.needsSlots);
         });
