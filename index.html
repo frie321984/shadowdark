@@ -112,7 +112,6 @@
         return {gold, silver, copper};
     }
     function priceToString(convertedPrice, showAll=false) {
-        //if (showAll) return `${convertedPrice.gold}g ${convertedPrice.silver}s ${convertedPrice.copper}c`
         const totxt = (value, type) =>
             (value != 0 || showAll)
              ? `${value}${type}`
