@@ -52,21 +52,23 @@ body {
         flex-basis: calc(50% - 20px); /* Subtracting margin */
     }
 }
-
-h3 { font-size: 10pt; margin-top: 0; padding-top: 0;}
+h1, h2 { margin: 0; margin-bottom: 5px; padding: 0;}
+h1 { font-size: 1.5rem; padding: 0 10px; }
+h2 { font-size: 1.2rem; }
     </style>
 </head>
-<body class="container">
+<body>
+    <h1>Das Silberne Emporium</h1>
+<main class="container">
 <div id="shop" class="box">
-    <h2>Das silberne Emporium</h2>
-    <h3>Gemischtwarenladen</h3>
+    <h2>Gemischtwarenladen</h2>
 </div>
 <div id="bag" class="box">
     <h2>Einkaufstasche</h2>
     <div class="total-price">Gesamtwert:</div>
     <div class="clean pointer">Alles löschen [x]</div>
 </div>
-
+</main>
 <script>
     const shopItems = [
         {name: "torch", price: 50, displayname: "🕯️ Fackel", needsSlots: 1},
